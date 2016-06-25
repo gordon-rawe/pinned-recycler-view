@@ -10,8 +10,8 @@ import android.widget.SectionIndexer;
 /**
  * Created by gordon on 6/21/16.
  */
-public abstract class PinnableRecyclerAdapter extends RecyclerView.Adapter<PinnableRecyclerAdapter.PinnableViewHolder> implements SectionIndexer {
-    public static final String TAG = PinnableRecyclerAdapter.class.getSimpleName();
+public abstract class PinnedRecyclerAdapter extends RecyclerView.Adapter<PinnedRecyclerAdapter.PinnedViewHolder> implements SectionIndexer {
+    public static final String TAG = PinnedRecyclerAdapter.class.getSimpleName();
 
     /**
      * Pinned header state: don't show the header.
@@ -31,9 +31,9 @@ public abstract class PinnableRecyclerAdapter extends RecyclerView.Adapter<Pinna
     public static final int PINNED_HEADER_PUSHED_UP = 2;
 
     @Override
-    public PinnableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PinnedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        PinnableViewHolder holder = new PinnableViewHolder(inflater.inflate(R.layout.layout_pinnable_recycler_view_abstract_item, parent, false));
+        PinnedViewHolder holder = new PinnedViewHolder(inflater.inflate(R.layout.layout_pinnable_recycler_view_abstract_item, parent, false));
         holder.header.removeAllViews();
         holder.content.removeAllViews();
         holder.header.addView(inflater.inflate(getPinnableHeaderView(), parent, false));
@@ -52,19 +52,19 @@ public abstract class PinnableRecyclerAdapter extends RecyclerView.Adapter<Pinna
     }
 
     @Override
-    public void onBindViewHolder(PinnableViewHolder holder, int position) {
+    public void onBindViewHolder(PinnedViewHolder holder, int position) {
         final int section = getSectionForPosition(position);
         boolean shouldShowHeader = (getPositionForSection(section) == position);
         configureSection(holder.header, holder.content, position, getItemViewType(position), shouldShowHeader);
     }
 
-    public class PinnableViewHolder extends RecyclerView.ViewHolder {
+    public class PinnedViewHolder extends RecyclerView.ViewHolder {
 
         public ViewGroup header;
         public ViewGroup content;
         public View itemView;
 
-        public PinnableViewHolder(View itemView) {
+        public PinnedViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
             header = (ViewGroup) itemView.findViewById(R.id.abstract_header);

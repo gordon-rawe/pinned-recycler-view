@@ -14,8 +14,8 @@ import android.view.View;
 /**
  * Created by gordon on 6/21/16.
  */
-public class PinnableRecyclerView extends RecyclerView {
-    public static final String TAG = PinnableRecyclerView.class.getSimpleName();
+public class PinnedRecyclerView extends RecyclerView {
+    public static final String TAG = PinnedRecyclerView.class.getSimpleName();
 
     private View mHeaderView;
     private boolean mHeaderViewVisible;
@@ -24,7 +24,7 @@ public class PinnableRecyclerView extends RecyclerView {
     private int mHeaderViewHeight;
 
     private LinearLayoutManager layoutManager;
-    private PinnableRecyclerAdapter adapter;
+    private PinnedRecyclerAdapter adapter;
 
 
     private void setPinnableHeaderView(View headerView) {
@@ -32,7 +32,7 @@ public class PinnableRecyclerView extends RecyclerView {
         requestLayout();
     }
 
-    public void setRecyclerViewAdapter(PinnableRecyclerAdapter adapter) {
+    public void setRecyclerViewAdapter(PinnedRecyclerAdapter adapter) {
         this.adapter = adapter;
         setAdapter(adapter);
         setPinnableHeaderView(LayoutInflater.from(getContext()).inflate(adapter.getPinnableHeaderView(), this, false));
@@ -62,12 +62,12 @@ public class PinnableRecyclerView extends RecyclerView {
         if (mHeaderView == null) return;
         int state = adapter.getPinnedHeaderState(position);
         switch (state) {
-            case PinnableRecyclerAdapter.PINNED_HEADER_GONE: {
+            case PinnedRecyclerAdapter.PINNED_HEADER_GONE: {
                 mHeaderViewVisible = false;
                 break;
             }
 
-            case PinnableRecyclerAdapter.PINNED_HEADER_VISIBLE: {
+            case PinnedRecyclerAdapter.PINNED_HEADER_VISIBLE: {
                 adapter.configurePinnableHeader(mHeaderView, position, 255);
                 if (mHeaderView.getTop() != 0) {
                     mHeaderView.layout(0, 0, mHeaderViewWidth, mHeaderViewHeight);
@@ -76,7 +76,7 @@ public class PinnableRecyclerView extends RecyclerView {
                 break;
             }
 
-            case PinnableRecyclerAdapter.PINNED_HEADER_PUSHED_UP: {
+            case PinnedRecyclerAdapter.PINNED_HEADER_PUSHED_UP: {
                 View firstView = getChildAt(0);
                 if (firstView != null) {
                     int bottom = firstView.getBottom();
@@ -115,17 +115,17 @@ public class PinnableRecyclerView extends RecyclerView {
         configureHeaderView(layoutManager.findFirstVisibleItemPosition());
     }
 
-    public PinnableRecyclerView(Context context) {
+    public PinnedRecyclerView(Context context) {
         super(context);
         init(context);
     }
 
-    public PinnableRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public PinnedRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public PinnableRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public PinnedRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }

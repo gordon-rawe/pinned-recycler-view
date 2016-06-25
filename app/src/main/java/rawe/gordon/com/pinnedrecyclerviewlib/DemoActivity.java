@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import rawe.gordon.com.lib.PinnableRecyclerAdapter;
-import rawe.gordon.com.lib.PinnableRecyclerView;
+import rawe.gordon.com.lib.PinnedRecyclerAdapter;
+import rawe.gordon.com.lib.PinnedRecyclerView;
 
 
 public class DemoActivity extends Activity {
-    PinnableRecyclerView lsComposer;
+    PinnedRecyclerView lsComposer;
     SectionComposerRecyclerAdapter adapter;
 
     @Override
@@ -21,11 +21,11 @@ public class DemoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section_recycler);
 
-        lsComposer = (PinnableRecyclerView) findViewById(R.id.lsComposer);
+        lsComposer = (PinnedRecyclerView) findViewById(R.id.lsComposer);
         lsComposer.setRecyclerViewAdapter(adapter = new SectionComposerRecyclerAdapter());
     }
 
-    class SectionComposerRecyclerAdapter extends PinnableRecyclerAdapter {
+    class SectionComposerRecyclerAdapter extends PinnedRecyclerAdapter {
         List<Pair<String, List<Composer>>> all = Data.getAllData();
 
         @Override
