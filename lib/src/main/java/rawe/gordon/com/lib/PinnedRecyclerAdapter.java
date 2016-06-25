@@ -14,6 +14,7 @@ import java.util.List;
  */
 public abstract class PinnedRecyclerAdapter extends RecyclerView.Adapter<PinnedRecyclerAdapter.PinnedViewHolder> {
     public static final String TAG = PinnedRecyclerAdapter.class.getSimpleName();
+    public static final int INDEX_NOT_FOUND = -1;
 
     /**
      * Pinned header state: don't show the header.
@@ -68,11 +69,11 @@ public abstract class PinnedRecyclerAdapter extends RecyclerView.Adapter<PinnedR
         return PINNED_HEADER_VISIBLE;
     }
 
-    public int findFirstCompleteVisibleHeaderPosition(int firstCompleteVisiblePosition) throws Exception {
+    public int findFirstCompleteVisibleHeaderPosition(int firstCompleteVisiblePosition) {
         for (int i = firstCompleteVisiblePosition; i < getItemCount(); i++) {
             if (isPositionHeader(i)) return i;
         }
-        throw new Exception("Index Not Found.");
+        return INDEX_NOT_FOUND;
     }
 
     @Override
@@ -83,13 +84,19 @@ public abstract class PinnedRecyclerAdapter extends RecyclerView.Adapter<PinnedR
 
     protected abstract void configureSection(View header, View content, int position, int viewType, boolean shouldShowHeader);
 
-    public abstract int getPinnedHeaderView();
+    protected abstract int getPinnedHeaderView();
 
-    public abstract int getPinnedContentView(int viewType);
+    protected abstract int getPinnedContentView(int viewType);
 
-    public abstract boolean isPositionHeader(int position);
+    protected abstract boolean isPositionHeader(int position);
 
-    public abstract void configurePinnedHeader(View header, int position, int progress);
+    protected abstract void configurePinnedHeader(View header, int position, int progress);
 
-    public abstract List<Integer> getHeaderIndexes();
+    protected abstract List<Integer> getHeaderIndexes();
+
+    protected abstract Object[] getHeaderData();
+
+    protected abstract Object getItem(int position);
+
+    protected abstract int getHeaderIndexForPosition(int position);
 }

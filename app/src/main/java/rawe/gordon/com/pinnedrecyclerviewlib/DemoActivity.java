@@ -34,7 +34,7 @@ public class DemoActivity extends Activity {
             if (shouldShowHeader) {
                 header.findViewById(R.id.header).setVisibility(View.VISIBLE);
                 TextView lSectionTitle = (TextView) header.findViewById(R.id.header);
-//                lSectionTitle.setText(getSections()[getSectionForPosition(position)-1]);
+                lSectionTitle.setText(getHeaderData()[getHeaderIndexForPosition(position)]);
             } else {
                 header.findViewById(R.id.header).setVisibility(View.GONE);
             }
@@ -45,6 +45,15 @@ public class DemoActivity extends Activity {
             lYear.setText(composer.year);
         }
 
+
+        @Override
+        public void configurePinnedHeader(View header, int position, int progress) {
+            TextView lSectionHeader = (TextView) header;
+            lSectionHeader.setText(getHeaderData()[getHeaderIndexForPosition(position)]);
+            lSectionHeader.setTextColor(progress << 24 | (0x000000));
+        }
+
+        @Override
         public Object getItem(int position) {
             int c = 0;
             for (int i = 0; i < all.size(); i++) {
@@ -82,13 +91,6 @@ public class DemoActivity extends Activity {
             return indexes;
         }
 
-        @Override
-        public void configurePinnedHeader(View header, int position, int progress) {
-            TextView lSectionHeader = (TextView) header;
-//            lSectionHeader.setText(getSections()[getSectionForPosition(position)-1]);
-//            lSectionHeader.setBackgroundColor(progress << 24 | (0xbbffbb));
-            lSectionHeader.setTextColor(progress << 24 | (0x000000));
-        }
 
         @Override
         public int getItemViewType(int position) {
@@ -104,7 +106,8 @@ public class DemoActivity extends Activity {
             return res;
         }
 
-        public String[] getSections() {
+        @Override
+        public String[] getHeaderData() {
             String[] res = new String[all.size()];
             for (int i = 0; i < all.size(); i++) {
                 res[i] = all.get(i).first;
@@ -112,7 +115,8 @@ public class DemoActivity extends Activity {
             return res;
         }
 
-        public int getSectionForPosition(int position) {
+        @Override
+        public int getHeaderIndexForPosition(int position) {
             int c = 0;
             for (int i = 0; i < all.size(); i++) {
                 if (position >= c && position < c + all.get(i).second.size()) {

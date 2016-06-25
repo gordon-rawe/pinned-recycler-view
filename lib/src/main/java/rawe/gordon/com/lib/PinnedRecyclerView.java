@@ -59,7 +59,7 @@ public class PinnedRecyclerView extends RecyclerView {
 
     public void configureHeaderView(int position) {
         Log.d(TAG, String.valueOf(position));
-        if (mHeaderView == null) return;
+        if (mHeaderView == null || position == 0) return;
         int state = adapter.getPinnedHeaderState(position);
         switch (state) {
             case PinnedRecyclerAdapter.PINNED_HEADER_GONE: {
@@ -68,7 +68,7 @@ public class PinnedRecyclerView extends RecyclerView {
             }
 
             case PinnedRecyclerAdapter.PINNED_HEADER_VISIBLE: {
-                adapter.configurePinnedHeader(mHeaderView, position, 255);
+                adapter.configurePinnedHeader(mHeaderView, position-1, 255);
                 if (mHeaderView.getTop() != 0) {
                     mHeaderView.layout(0, 0, mHeaderViewWidth, mHeaderViewHeight);
                 }
@@ -77,7 +77,7 @@ public class PinnedRecyclerView extends RecyclerView {
             }
 
             case PinnedRecyclerAdapter.PINNED_HEADER_PUSHED_UP: {
-                View firstCompleteVisibleView = getChildAt(position-layoutManager.findFirstVisibleItemPosition());
+                View firstCompleteVisibleView = getChildAt(position - layoutManager.findFirstVisibleItemPosition());
                 if (firstCompleteVisibleView != null) {
                     int top = firstCompleteVisibleView.getTop();
                     int headerHeight = mHeaderView.getHeight();
@@ -90,7 +90,7 @@ public class PinnedRecyclerView extends RecyclerView {
                         y = 0;
                         alpha = 255;
                     }
-                    adapter.configurePinnedHeader(mHeaderView, position, alpha);
+                    adapter.configurePinnedHeader(mHeaderView, position-1, alpha);
                     if (mHeaderView.getTop() != y) {
                         mHeaderView.layout(0, y, mHeaderViewWidth, mHeaderViewHeight + y);
                     }
